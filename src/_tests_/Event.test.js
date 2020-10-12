@@ -92,6 +92,8 @@ describe("<Event /> component", () => {
     expect(EventWrapper.find(".extra .link").prop("href")).toEqual(
       "https://www.google.com/calendar/event?eid=NGVhaHM5Z2hraHJ2a2xkNzJob2d1OXBoM2VfMjAyMDA1MTlUMTQwMDAwWiBmdWxsc3RhY2t3ZWJkZXZAY2FyZWVyZm91bmRyeS5jb20"
     );
-    expect(EventWrapper.find(".extra .description").html()).toEqual('<div class="description">Have you wondered how you can ask Google to show you the list of the top ten must-see places in Berlin? And how Google presents you the list? How can you submit the details of an application? Well, JavaScript is doing these. :) \n\nJavascript offers interactivity to a dull, static website. Come, learn JavaScript with us and make those beautiful websites.</div>');
-});
+    expect(EventWrapper.find(".extra .description").html()).toEqual(
+      '<div class="description">Have you wondered how you can ask Google to show you the list of the top ten must-see places in Berlin? And how Google presents you the list? How can you submit the details of an application? Well, JavaScript is doing these. :) \n\nJavascript offers interactivity to a dull, static website. Come, learn JavaScript with us and make those beautiful websites.</div>'
+    );
+  });
 });
