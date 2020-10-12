@@ -4,12 +4,11 @@ import { extractLocations } from "./api";
 
 class CitySearch extends Component {
   state = {
-    //locations: this.props.location,
     query: "",
     suggestions: [],
   };
 
-   handleInputChanged = (event) => {
+  handleInputChanged = (event) => {
     const value = event.target.value;
     this.setState({ query: value });
   };
@@ -28,11 +27,14 @@ class CitySearch extends Component {
           onChange={this.handleInputChanged}
         />
         <ul className="suggestions">
-        {this.state.suggestions.map(suggestion =>
-            <li key={suggestion.name_string} onClick={() => this.handleItemClicked(suggestion.name_string)}>
+          {this.state.suggestions.map((suggestion) => (
+            <li
+              key={suggestion.name_string}
+              onClick={() => this.handleItemClicked(suggestion.name_string)}
+            >
               {suggestion.name_string}
             </li>
-        )}
+          ))}
         </ul>
       </div>
     );
