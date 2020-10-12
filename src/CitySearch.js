@@ -4,7 +4,7 @@ import { extractLocations } from "./api";
 
 class CitySearch extends Component {
   state = {
-    locations: this.props.location,
+    //locations: this.props.location,
     query: "",
     suggestions: [],
   };
@@ -29,7 +29,7 @@ class CitySearch extends Component {
         />
         <ul className="suggestions">
         {this.state.suggestions.map(suggestion =>
-            <li key={suggestion.name_string} onClick={() => this.handleItemClicked(suggestion)}>
+            <li key={suggestion.name_string} onClick={() => this.handleItemClicked(suggestion.name_string)}>
               {suggestion.name_string}
             </li>
         )}

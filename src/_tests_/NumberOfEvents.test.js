@@ -5,7 +5,7 @@ import NumberOfEvents from "../NumberOfEvents";
 describe("<NumberOfEvents /> component", () => {
   let NumberOfEventsWrapper;
   beforeAll(() => {
-    NumberOfEventsWrapper = shallow(<NumberOfEvents updateEvents={() => {}} />);
+    NumberOfEventsWrapper = shallow(<NumberOfEvents />);
   });
 
   test("render textbox element", () => {
@@ -27,9 +27,5 @@ describe("<NumberOfEvents /> component", () => {
       target: { value: 24 },
     });
     expect(NumberOfEventsWrapper.state("numberOfEvents")).toBe(24);
-  });
-
-  test("show number of events input label", () => {
-    expect(NumberOfEventsWrapper.find(".numberOfEvents")).toHaveLength(1);
   });
 });
