@@ -4,7 +4,8 @@ import { extractLocations } from "./api";
 
 class CitySearch extends Component {
   state = {
-    query: "",
+    locations: extractLocations(mockData),
+    query: "Berlin, Germany",
     suggestions: [],
   };
 
@@ -28,12 +29,15 @@ class CitySearch extends Component {
         />
         <ul className="suggestions">
           {this.state.suggestions.map((suggestion) => (
-            <li
-              key={suggestion.name_string}
-              onClick={() => this.handleItemClicked(suggestion.name_string)}
-            >
-              {suggestion.name_string}
-            </li>
+            <li 
+              key={suggestion}
+              onClick={() => this.handleItemClicked(suggestion)}>{suggestion}</li>
+            // <li
+            //   key={suggestion.name_string}
+            //   onClick={() => this.handleItemClicked(suggestion.name_string)}
+            // >
+            //   {suggestion.name_string}
+            // </li>
           ))}
         </ul>
       </div>

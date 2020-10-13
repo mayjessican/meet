@@ -5,32 +5,9 @@ import { mockData } from "../mock-data";
 
 describe("<Event /> component", () => {
   let EventWrapper;
-  //   beforeAll(() => {
-  //     EventWrapper = shallow(<Event event={mockData[0]} />);
-  //   });
-
-  beforeAll(() => {
-    EventWrapper = shallow(
-      <Event
-        event={{
-          start: {
-            dateTime: "2020-05-19T16:00:00+02:00",
-          },
-          end: {
-            dateTime: "2020-05-19T17:00:00+02:00",
-          },
-          name: "Learn JavaScript",
-          link:
-            "https://www.google.com/calendar/event?eid=NGVhaHM5Z2hraHJ2a2xkNzJob2d1OXBoM2VfMjAyMDA1MTlUMTQwMDAwWiBmdWxsc3RhY2t3ZWJkZXZAY2FyZWVyZm91bmRyeS5jb20",
-          description:
-            "Have you wondered how you can ask Google to show you the list of the top ten must-see places in Berlin? And how Google presents you the list? How can you submit the details of an application? Well, JavaScript is doing these. :) \n\nJavascript offers interactivity to a dull, static website. Come, learn JavaScript with us and make those beautiful websites.",
-          visibility: "public",
-          location: "Berlin, Germany",
-          group: "Learn JavaScript - Berlin",
-        }}
-      />
-    );
-  });
+    beforeAll(() => {
+      EventWrapper = shallow(<Event event={mockData[0]} />);
+    });
 
   beforeEach(() => {
     EventWrapper.setState({ showDetails: false });
@@ -39,12 +16,12 @@ describe("<Event /> component", () => {
   test("render enough information", () => {
     expect(EventWrapper.find(".Event")).toHaveLength(1);
     expect(EventWrapper.find(".time")).toHaveLength(1);
-    expect(EventWrapper.find(".name")).toHaveLength(1);
+    expect(EventWrapper.find(".summary")).toHaveLength(1);
   });
 
   test("render correct information", () => {
     expect(EventWrapper.find(".time").text()).toEqual("2020-05-19T16:00:00+02:00 - 2020-05-19T17:00:00+02:00");
-    expect(EventWrapper.find(".name").text()).toEqual("Learn JavaScript");
+    expect(EventWrapper.find(".summary").text()).toEqual("Learn JavaScript");
   });
 
   test("click on details button should expand event details", () => {
@@ -67,8 +44,7 @@ describe("<Event /> component", () => {
   test("Display extra info", () => {
     EventWrapper.setState({ showDetails: true });
     expect(EventWrapper.find(".extra .location")).toHaveLength(1);
-    expect(EventWrapper.find(".extra .visibility")).toHaveLength(1);
-    expect(EventWrapper.find(".extra .link")).toHaveLength(1);
+    expect(EventWrapper.find(".extra .htmlLink")).toHaveLength(1);
     expect(EventWrapper.find(".extra .description")).toHaveLength(1);
   });
 
@@ -77,12 +53,11 @@ describe("<Event /> component", () => {
     expect(EventWrapper.find(".extra .location").text()).toEqual(
       "Berlin, Germany"
     );
-    expect(EventWrapper.find(".extra .visibility").text()).toEqual("public");
-    expect(EventWrapper.find(".extra .link").prop("href")).toEqual(
+    expect(EventWrapper.find(".extra .htmlLink").prop("href")).toEqual(
       "https://www.google.com/calendar/event?eid=NGVhaHM5Z2hraHJ2a2xkNzJob2d1OXBoM2VfMjAyMDA1MTlUMTQwMDAwWiBmdWxsc3RhY2t3ZWJkZXZAY2FyZWVyZm91bmRyeS5jb20"
     );
-    expect(EventWrapper.find(".extra .description").html()).toEqual(
-      '<div class="description">Have you wondered how you can ask Google to show you the list of the top ten must-see places in Berlin? And how Google presents you the list? How can you submit the details of an application? Well, JavaScript is doing these. :) \n\nJavascript offers interactivity to a dull, static website. Come, learn JavaScript with us and make those beautiful websites.</div>'
+    expect(EventWrapper.find(".extra .description").text()).toEqual(
+      "Have you wondered how you can ask Google to show you the list of the top ten must-see places in Berlin? And how Google presents you the list? How can you submit the details of an application? Well, JavaScript is doing these. :) \n\nJavascript offers interactivity to a dull, static website. Come, learn JavaScript with us and make those beautiful websites."
     );
   });
 });

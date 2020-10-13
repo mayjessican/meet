@@ -121,8 +121,8 @@ module.exports.getCalendarEvents = async (input) => {
     // Then we can call the calendar events API
     calendar.events.list(
       {
-        calendarId: calendar_id,
-        //calendarId: 'fullstackwebdev@careerfoundry.com',
+        //calendarId: calendar_id,
+        calendarId: 'fullstackwebdev@careerfoundry.com',
         auth: oAuth2Client,
         timeMin: new Date().toISOString(),
         maxResults: 32,

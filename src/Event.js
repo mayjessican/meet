@@ -18,16 +18,12 @@ class Event extends Component {
         <p className="time">
           {event.start.dateTime} - {event.end.dateTime}
         </p>
-        <p className="name">{event.name}</p>
+        <p className="summary">{event.summary}</p>
         {this.state.showDetails && (
           <div className="extra">
             <p className="location">{event.location}</p>
-            <div
-              className="description"
-              dangerouslySetInnerHTML={{ __html: event.description }}
-            />
-            <p className="visibility">{event.visibility}</p>
-            <a className="link" href={event.link}>
+            <p className="description">{event.description}</p>
+            <a className="htmlLink" href={event.htmlLink}>
               Event Link
             </a>
           </div>
