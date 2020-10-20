@@ -4,18 +4,33 @@ import { extractLocations } from "./api";
 
 class CitySearch extends Component {
   state = {
-    locations: extractLocations(mockData),
+    //locations: extractLocations(mockData),
+    locations: this.props.locations,
     query: "Berlin, Germany",
     suggestions: [],
+    showSuggestions: false,
   };
 
   handleInputChanged = (event) => {
+    this.setState({ showSuggestions: true });
     const value = event.target.value;
-    this.setState({ query: value });
+    const suggestions = this.props.locations.filter((location) => {
+      return location.toUpperCase().indexOf(value.toUpperCase()) > -1;
+    });
+
+    return this.setState({
+      query: value,
+      suggestions,
+    });
   };
 
-  handleItemClicked = (value) => {
-    this.setState({ query: value });
+  handleItemClicked = (suggestion) => {
+    this.setState({
+      query: suggestion,
+      suggestions: [],
+      showSuggestions: false,
+    });
+    this.props.updateEvents(suggestion);
   };
 
   render() {
@@ -27,18 +42,21 @@ class CitySearch extends Component {
           value={this.state.query}
           onChange={this.handleInputChanged}
         />
-        <ul className="suggestions">
+        <ul className={
+            this.state.showSuggestions ? "suggestions showSuggestions" : "display-none"
+          }>
           {this.state.suggestions.map((suggestion) => (
-            <li 
+            <li
               key={suggestion}
-              onClick={() => this.handleItemClicked(suggestion)}>{suggestion}</li>
-            // <li
-            //   key={suggestion.name_string}
-            //   onClick={() => this.handleItemClicked(suggestion.name_string)}
-            // >
-            //   {suggestion.name_string}
-            // </li>
+              onClick={() => this.handleItemClicked(suggestion)}
+            >
+              {suggestion}
+            </li>
           ))}
+          <li onClick={() => this.handleItemClicked("all")}>
+            <b>See all cities</b>
+          </li>
+          ;
         </ul>
       </div>
     );
