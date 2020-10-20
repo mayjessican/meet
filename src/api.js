@@ -31,6 +31,17 @@ export const getEvents = async () => {
   return { events: mockData, locations: extractLocations(mockData) };
 };
 
+const getToken = async (code) => {
+  const encodeCode = encodeURIComponent(code);
+  const { access_token } = await fetch(
+    `https://qxi4otm9a6.execute-api.eu-central-1.amazonaws.com/dev/api/token/${encodeCode}`
+  )
+    .then((res) => {
+      return res.json();
+    })
+    .catch((error) => error);
+  }
+
 async function getAccessToken() {
  const accessToken = localStorage.getItem('access_token');
  const tokenCheck = accessToken && (await checkToken(accessToken));
@@ -49,4 +60,6 @@ async function getAccessToken() {
     return code && getToken(code);
   }
   return accessToken;
-}
+};
+
+export { getAccessToken, getToken }
