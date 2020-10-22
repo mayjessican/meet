@@ -21,9 +21,12 @@ describe('<App /> integration', () => {
 
   test("change state after getting list of events", async () => {
     const AppWrapper = shallow(<App />);
-    AppWrapper.instance().updateEvents("");
+    AppWrapper.instance().updateEvents("all");
+    // When the location is all, then the events will be all. If the location is some specified city, then the events will be filtered based on that city
+    // 
     await AppWrapper.update();
-    expect(await AppWrapper.state("events")).toEqual(mockData);
+    // Here we expect the events to be equal to mock Data, which means the location should be `all`
+    expect(await AppWrapper.state("events")).toStrictEqual(mockData);
     AppWrapper.unmount();
   });
 });

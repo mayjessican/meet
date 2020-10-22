@@ -4,7 +4,7 @@ import CitySearch from "./CitySearch";
 import EventList from "./EventList";
 import NumberOfEvents from "./NumberOfEvents";
 import { getEvents } from "./api";
-import { mockData } from "./mock-data";
+// import { mockdata } from "../mock-data"; // do we need to import mock data as we don't use it
 import "./nprogress.css";
 
 class App extends Component {
@@ -16,6 +16,12 @@ class App extends Component {
   };
 
   updateEvents = (location) => {
+    // This update Events receives location param, and use this location param to filter the events below.
+    // Either this location will be 'all', which means we get all events, or some city where we filter the events based on the city
+    // But when I console.log the location, it's empty. Which means it's not passed correctly from where we call it.
+    // And we need to jump to where we call this function. There are 2 places we call this function, one in NumberOfEvents, one in CitySearch
+    // There is another place: in the test App.test.js
+    // Need a bit of time to figure it out, but you understood or not?So far yes, not 100% but I'm getting it and think I need to play around a bit more nice! you can continue thank you! welcome!
     getEvents().then((response) => {
       const locationEvents =
         location === "all"
@@ -27,6 +33,7 @@ class App extends Component {
         currentLocation: location,
       });
     });
+
   };
 
   componentDidMount() {

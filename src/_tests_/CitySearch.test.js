@@ -26,6 +26,10 @@ describe("<CitySearch locations={locations} /> component", () => {
     expect(CitySearchWrapper.find(".city")).toHaveLength(1);
   });
 
+  test("renders a list of suggestions", () => {
+    expect(CitySearchWrapper.find(".suggestions")).toHaveLength(0);
+  });
+
   // test("renders a list of suggestions", () => {
   //   expect(CitySearchWrapper.find(".suggestions")).toHaveLength(1);
   // });
