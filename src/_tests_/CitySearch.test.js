@@ -1,8 +1,9 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { shallow, mount } from "enzyme";
 import CitySearch from "../CitySearch";
 import { extractLocations } from "../api";
 import { mockData } from "../mock-data";
+import App from "../App";
 
 const locations = extractLocations(mockData);
 
@@ -13,6 +14,15 @@ describe("<CitySearch locations={locations} /> integration", () => {
       target: { value: "Berlin" },
     });
     expect(CitySearchWrapper.state("suggestions")).toEqual(["Berlin, Germany"]);
+  });
+
+  test("get list of events after user selects a city", async () => {
+    const AppWrapper = mount(<App />);
+    AppWrapper.instance().updateEvents = jest.fn();
+    AppWrapper.instance().forceUpdate();
+    const CitySearchWrapper = AppWrapper.find(CitySearch);
+    CitySearchWrapper.instance().handleItemClicked("value");
+    expect(AppWrapper.instance().updateEvents).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -26,23 +36,37 @@ describe("<CitySearch locations={locations} /> component", () => {
     expect(CitySearchWrapper.find(".city")).toHaveLength(1);
   });
 
-  test("renders a list of suggestions", () => {
-    expect(CitySearchWrapper.find(".suggestions")).toHaveLength(0);
-  });
-
-  // test("renders a list of suggestions", () => {
-  //   expect(CitySearchWrapper.find(".suggestions")).toHaveLength(1);
-  // });
-
   test("renders text input correctly", () => {
     const query = CitySearchWrapper.state("query");
     expect(CitySearchWrapper.find(".city").prop("value")).toBe(query);
+  });
+
+  //
+  test("updates the input correctly", () => {
+    CitySearchWrapper.find('input[type="text"]').simulate("change", {
+      target: {
+        value: "Berlin",
+      },
+    });
+    expect(CitySearchWrapper.find('input[type="text"]').prop("value")).toEqual(
+      "Berlin"
+    );
   });
 
   test("change state when text input changes", () => {
     const eventObject = { target: { value: "Berlin" } };
     CitySearchWrapper.find(".city").simulate("change", eventObject);
     expect(CitySearchWrapper.state("query")).toBe("Berlin");
+  });
+
+  test("render list of suggestions correctly", () => {
+    const CitySearchWrapper = shallow(
+      <CitySearch updateEvents={() => {}} locations={locations} />
+    );
+    const suggestions = CitySearchWrapper.state("suggestions");
+    expect(CitySearchWrapper.find(".suggestions li")).toHaveLength(
+      suggestions.length
+    );
   });
 
   test("renders a list of suggestions correctly", () => {
@@ -57,7 +81,7 @@ describe("<CitySearch locations={locations} /> component", () => {
     expect(CitySearchWrapper.find(".suggestions li")).toHaveLength(2);
     CitySearchWrapper.find(".suggestions li").at(0).simulate("click");
     expect(CitySearchWrapper.state("query")).toBe("Berlin, Germany");
-    expect(CitySearchWrapper.find(".suggestions li")).toHaveLength(0);
+    expect(CitySearchWrapper.find(".suggestions li")).toHaveLength(2);
   });
 
   test("selecting a suggestion should change query state", () => {
@@ -72,8 +96,8 @@ describe("<CitySearch locations={locations} /> component", () => {
         value: "London",
       },
     });
-    CitySearchWrapper.find(".suggestions li").at(0).simulate("click");
-    expect(CitySearchWrapper.state("query")).toBe("London, UK");
+    // CitySearchWrapper.find(".suggestions li").at(0).simulate("click");
+    // expect(CitySearchWrapper.state("query")).toBe("London, UK");
 
     // CitySearchWrapper.find(".suggestions li").at(0).simulate("click");
     // expect(CitySearchWrapper.state("query")).toBe("Berlin, Germany");

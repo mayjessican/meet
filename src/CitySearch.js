@@ -1,12 +1,9 @@
 import React, { Component } from "react";
-import { mockData } from "./mock-data";
-import { extractLocations } from "./api";
 
 class CitySearch extends Component {
   state = {
-    //locations: extractLocations(mockData),
     locations: this.props.locations,
-    query: "Berlin, Germany",
+    query: "",
     suggestions: [],
     showSuggestions: false,
   };
