@@ -1,5 +1,5 @@
 const { google } = require("googleapis");
-// const OAuth2 = google.auth.OAuth2;
+const OAuth2 = google.auth.OAuth2;
 const calendar = google.calendar("v3");
 /**
  * SCOPES allows you to set access levels; this is set to readonly for now because you don't have access rights to
@@ -40,7 +40,6 @@ const oAuth2Client = new google.auth.OAuth2(
  *
  */
 module.exports.getAuthURL = async () => {
-  // This is the call to generate the link and get the authorization code, very simple for the first step
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: "offline",
     scope: SCOPES,
@@ -115,10 +114,9 @@ module.exports.getCalendarEvents = async (input) => {
     `${input.pathParameters.access_token}`
   );
 
-  oAuth2Client.setCredentials({ access_token }); // Here is where we set the access_token
+  oAuth2Client.setCredentials({ access_token });
 
   return new Promise((resolve, reject) => {
-    // Then we can call the calendar events API
     calendar.events.list(
       {
         //calendarId: calendar_id,

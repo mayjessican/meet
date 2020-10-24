@@ -13,8 +13,6 @@ class Event extends Component {
 
   render() {
     const event = this.props.event;
-    // Problem is here. If you name if event you should find the class event, if you name it Event, then use class Event.
-    // You can not expect to find class Event if you set it to be event.
     return (
       <div className="event">
         <p className="time">

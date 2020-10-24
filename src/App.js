@@ -38,7 +38,7 @@ class App extends Component {
     return data;
   };
 
-  updateEvents = (location) => {
+  updateEvents = (location, eventCount ) => {
     //const { currentLocation, numberOfEvents } = this.state;
     if (location) {
     getEvents().then((response) => {
