@@ -42,6 +42,7 @@ const extractLocations = (events) => {
 };
 
 const getEvents = async () => {
+  console.log('function called');
   NProgress.start();
   if (window.location.href.startsWith("http://localhost")) {
     NProgress.done();
@@ -49,10 +50,12 @@ const getEvents = async () => {
   }
 
   const token = await getAccessToken();
+  console.log('token: ', token);
   if (token) {
     removeQuery();
     const url = `https://qxi4otm9a6.execute-api.eu-central-1.amazonaws.com/dev/api/get-events//${token}`;
     const result = await axios.get(url);
+    console.log(result)
     if (result.data) {
       var locations = extractLocations(result.data.events);
       localStorage.setItem("lastEvents", JSON.stringify(result.data));
@@ -60,17 +63,22 @@ const getEvents = async () => {
     }
     NProgress.done();
     return { events: result.data.events, locations };
+  } else { 
+    return {
+      events: [],
+      locations: [],
+    };
   }
 };
 
 const getAccessToken = async () => {
-  const accessToken = await localStorage.getItem("access_token");
+  const accessToken = localStorage.getItem("access_token");
   const tokenCheck = accessToken && (await checkToken(accessToken));
-
+  console.log('token check: ', tokenCheck);
   if (!accessToken || tokenCheck.error) {
-    await localStorage.removeItem("access_token");
+    localStorage.removeItem("access_token");
     const searchParams = new URLSearchParams(window.location.search);
-    const code = await searchParams.get("code");
+    const code = searchParams.get("code");
     if (!code) {
       const results = await axios.get(
         "https://qxi4otm9a6.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url"
@@ -78,8 +86,10 @@ const getAccessToken = async () => {
       const { authUrl } = results.data;
       return (window.location.href = authUrl);
     }
+    console.log('code: ', code);
     return code && getToken(code);
   }
+  console.log('access_token: ', accessToken);
   return accessToken;
 };
 
