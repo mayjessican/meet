@@ -26,7 +26,7 @@ describe('show/hide an event details', () => {
     const page = await browser.newPage();
     await page.goto('http://localhost:3000/');
     await page.waitForSelector('.event');
-    const extra = await page.$('.event .summary');
+    const extra = await page.$('.event .description');
 
     expect(extra).toBeNull();
   });
@@ -44,7 +44,7 @@ describe('show/hide an event details', () => {
 
   test('User can collapse an event to hide its details', async () => {
     await page.click('.event .details-btn');
-
+    //await page.click('.event .details-btn');
     const extra = await page.$('.event .extra');
     expect(extra).toBeNull();
   });
