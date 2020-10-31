@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 class CitySearch extends Component {
   state = {
-    locations: this.props.locations,
     query: "",
     suggestions: [],
     showSuggestions: false,
@@ -38,6 +37,7 @@ class CitySearch extends Component {
           className="city"
           value={this.state.query}
           onChange={this.handleInputChanged}
+          placeholder="City"
         />
         <ul className={
             this.state.showSuggestions ? "suggestions showSuggestions" : "display-none"
