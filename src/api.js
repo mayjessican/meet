@@ -28,15 +28,17 @@ const removeQuery = () => {
 const checkToken = async (accessToken) => {
   return fetch(
     `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
-  ).then(async (res) => {
-    const result = await res.json();
-    if (result.error) {
+  )
+    .then(async (res) => {
+      const result = await res.json();
+      if (result.error) {
+        return false;
+      }
+      return true;
+    })
+    .catch(() => {
       return false;
-    }
-    return true;      
-  }).catch(() => {
-    return false;
-  });
+    });
 };
 
 const extractLocations = (events) => {
@@ -63,7 +65,7 @@ const getEvents = async () => {
     }
     NProgress.done();
     return { events: result.data.events || [], locations };
-  } else { 
+  } else {
     return {
       events: [],
       locations: [],
@@ -91,7 +93,7 @@ const getAccessToken = async () => {
 };
 
 const getToken = async (code) => {
-  removeQuery ();
+  removeQuery();
   const encodeCode = encodeURIComponent(code);
   const { access_token } = await fetch(
     `https://qxi4otm9a6.execute-api.eu-central-1.amazonaws.com/dev/api/token/${encodeCode}`
