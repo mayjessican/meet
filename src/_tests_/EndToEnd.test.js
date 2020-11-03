@@ -8,13 +8,12 @@ describe("show/hide an event details", () => {
     browser = await puppeteer.launch({
       //executablePath: 'C:\\Program Files (x86)\\Microsoft\\Edge Dev\\Application\\msedge.exe',
       headless: false,
-      slowMo: 250, // slow down by 250ms
-      ignoreDefaultArgs: ["--disable-extensions"], // ignores default setting that causes timeout errors
+      slowMo: 250,
+      ignoreDefaultArgs: ["--disable-extensions"],
     });
     page = await browser.newPage();
     await page.goto("http://localhost:3000/");
     await page.waitForSelector(".event");
-    //await browser.close();
   });
 
   afterAll(() => {
@@ -26,7 +25,7 @@ describe("show/hide an event details", () => {
     const page = await browser.newPage();
     await page.goto("http://localhost:3000/");
     await page.waitForSelector(".event");
-    const extra = await page.$(".event .summary");
+    const extra = await page.$(".event .extra");
 
     expect(extra).toBeNull();
     browser.close();
