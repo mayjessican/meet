@@ -31,6 +31,13 @@ class Event extends Component {
         <button className="details-btn" onClick={this.onDetailsButtonClicked}>
           Details
         </button>
+        {this.state.showDetails && (
+          <div className="event__Details">
+            <p className="event__Details--description">
+              {this.props.event.description}
+            </p>
+          </div>
+        )}
       </div>
     );
   }
