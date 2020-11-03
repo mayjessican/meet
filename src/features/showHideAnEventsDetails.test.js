@@ -50,7 +50,7 @@ defineFeature(feature, (test) => {
     });
 
     then("the event element should expand and show more information", () => {
-      expect(AppWrapper.find(".event .event__Details")).toHaveLength(1);
+      expect(AppWrapper.find(".event .extra")).toHaveLength(1);
     });
   });
 
@@ -68,7 +68,7 @@ defineFeature(feature, (test) => {
     and("event element is expanded and shows details", () => {
       AppWrapper.update();
       AppWrapper.find(".event .details-btn").at(0).simulate("click");
-      expect(AppWrapper.find(".event .event__Details")).toHaveLength(1);
+      expect(AppWrapper.find(".event .extra")).toHaveLength(1);
     });
 
     when("the user clicks the 'Hide details' button", () => {
@@ -76,7 +76,7 @@ defineFeature(feature, (test) => {
     });
 
     then("the event element details should collapse", () => {
-      expect(AppWrapper.find(".event .event__Details")).toHaveLength(0);
+      expect(AppWrapper.find(".event .extra")).toHaveLength(0);
     });
   });
 });
