@@ -56,13 +56,11 @@ const getEvents = async () => {
   if (!navigator.onLine) {
     const events = localStorage.getItem("lastEvents");
     NProgress.done();
-    return { events: JSON.parse(events).events, locations:   extractLocations(JSON.parse(events).events) };
+    return {
+      events: JSON.parse(events).events,
+      locations: extractLocations(JSON.parse(events).events),
+    };
   }
-  // if (result.data) {
-  //   var locations = extractLocations(result.data.events);
-  //   localStorage.setItem('lastEvents', JSON.stringify(result.data));
-  //   localStorage.setItem('locations', JSON.stringify(locations));
-  // }
 
   const token = await getAccessToken();
   if (token) {
@@ -70,8 +68,13 @@ const getEvents = async () => {
     const url = `https://qxi4otm9a6.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/${token}`;
     const result = await axios.get(url);
     let locations = [];
+    // if (result.data) 
+    //   locations = extractLocations(result.data.events);
+    // }
     if (result.data) {
       locations = extractLocations(result.data.events);
+      localStorage.setItem("lastEvents", JSON.stringify(result.data));
+      localStorage.setItem("locations", JSON.stringify(locations));
     }
     NProgress.done();
     return { events: result.data.events || [], locations };
