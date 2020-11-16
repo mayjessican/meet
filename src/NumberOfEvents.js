@@ -11,7 +11,7 @@ class NumberOfEvents extends Component {
     this.setState({ numberOfEvents: value });
     this.props.updateEvents(null, value);
 
-    if (value < 1) {
+    if (value < 1 || value > 32) {
       this.setState({
         infoText: "Select number from 1 to 32",
       });
@@ -27,7 +27,7 @@ class NumberOfEvents extends Component {
       <div className="numberOfEvents">
         <label>Number of Events:</label>
         <input
-          type="text"
+          type="number"
           id="numberOfEvents input"
           value={this.state.numberOfEvents}
           onChange={this.handleInputChanged}
