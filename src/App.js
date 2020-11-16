@@ -5,6 +5,7 @@ import EventList from "./EventList";
 import NumberOfEvents from "./NumberOfEvents";
 import { getEvents } from "./api";
 import "./nprogress.css";
+import { WarningAlert } from "./Alert";
 
 class App extends Component {
   state = {
@@ -16,6 +17,12 @@ class App extends Component {
 
   async componentDidMount() {
     this.mounted = true;
+    if (!navigator.onLine) {
+      this.setState({
+        warningText:
+          "As you are offline, you are only viewing the cached events from your last session",
+      });
+    }
     getEvents().then((response) => {
       if (this.mounted) {
         this.setState({
@@ -66,6 +73,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <WarningAlert text={this.state.warningText} />
         <CitySearch
           updateEvents={this.updateEvents}
           locations={this.state.locations}

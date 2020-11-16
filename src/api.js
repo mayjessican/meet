@@ -68,7 +68,7 @@ const getEvents = async () => {
     const url = `https://qxi4otm9a6.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/${token}`;
     const result = await axios.get(url);
     let locations = [];
-    // if (result.data) 
+    // if (result.data)
     //   locations = extractLocations(result.data.events);
     // }
     if (result.data) {
